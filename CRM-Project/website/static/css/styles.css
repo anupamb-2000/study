@@ -140,10 +140,17 @@ body {
     font-weight: bold;
 }
 
+.result-count {
+    color: grey;
+    font-weight: bold;
+    margin: 0.5em;
+}
+
 .input-field {
     background-color: var(--white) !important;
     padding-left: 5%;
     padding-right: 5%;
+    margin: 2em auto !important;
 }
 
 .input-field label {
@@ -172,6 +179,12 @@ body {
     border-radius: 15%;
 }
 
+.back {
+    max-width: fit-content;
+    float: left;
+    margin: 1em;
+}
+
 .buttons {
     margin-left: auto;
     display: flex;
@@ -179,6 +192,10 @@ body {
     padding: 0.5em;
     max-width: fit-content;
     margin-right: 1em;
+}
+
+.calendar-btn {
+    margin-left: 0.5em;
 }
 
 .waves-effect.waves-orange .waves-ripple {
@@ -196,6 +213,12 @@ body {
 [type="checkbox"]:checked + span:not(.lever):before {
     border-right: 2px solid var(--orange);
     border-bottom: 2px solid var(--orange);
+}
+
+#modal6 {
+    width: 60%;
+    height: 60%;
+    background-color: var(--white);
 }
 
 .modal-content, .modal-footer { 
@@ -222,3 +245,4 @@ body {
 .align-footer{
     padding-left: 1em;
 }
+

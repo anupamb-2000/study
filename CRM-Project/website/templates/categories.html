@@ -1,11 +1,17 @@
 {% extends "base.html" %} 
 {% block title %}Categories{% endblock %} 
 {% block content %}
-<div class="buttons">
-
+{% if not listAll %}
+<div class="back col s3">
+    <button class="back-btn btn-flat btn-medium waves-effect waves-orange" onClick="categoryBack()">
+        <i class="material-icons">arrow_back</i>
+    </button>
+</div>
+{% endif %}
+<div class="buttons col s9">
     <a href="#modal1" id="searchBtn" class="btn waves-effect waves-light orange" 
         onclick="$('#modal1').modal('open');">Search
-        <i class="material-icons white-text right">search</i>
+        <i class="material-icons white-text ">search</i>
     </a>
 
     <div id="modal1" class="modal">
@@ -32,12 +38,12 @@
             </div>
         </div>
     </div>
-
+    {% if listAll %}
     <a href="#modal2" class="btn waves-effect waves-light orange modal-trigger"
         onclick="$('#modal2').modal('open');">Add category
         <i class="material-icons right">add</i>
     </a>
-
+    
     <div id="modal2" class="modal">
         <div class="modal-content">
             <form action="" method="post">
@@ -55,8 +61,8 @@
                 </div>
                 <div class="input-field col s12">
                     <select name="categoryStatus" id="categoryStatus">
-                      <option value=1 selected>ENABLED</option>
-                      <option value=0>DISABLED</option>
+                      <option value='1'>ENABLED</option>
+                      <option value=''>DISABLED</option>
                     </select>
                     <label>Category Status</label>
                   </div>
@@ -75,6 +81,7 @@
             </form>
         </div>
     </div>
+    {% endif %}
 
     <a href="#modal3" class="filter-btn btn-flat modal-trigger btn-medium waves-effect waves-orange"
         onclick="$('#modal3').modal('open');"><i class="material-icons">filter_list</i></a>
@@ -107,10 +114,13 @@
             <a href="#" class="waves-effect waves-orange btn-flat" onclick="clearFilters()">Clear</a>
         </div>
     </div>
+    {% if categories|count != 0 %}
+    <span class="card-subtitle center"><em>Showing {{ categories|count }} results</em></span>
+    {% endif %}
 </div>
 <!--card-->
 {% if categories|count == 0 %}
-    <p class="center empty-content">There are no batches to show</p>
+<p class="center empty-content">There are no categories to show</p>
 {% else %}
 {% for category in categories %}
     <div class="card">

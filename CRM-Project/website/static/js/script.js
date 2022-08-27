@@ -37,3 +37,36 @@ function searchCategory(){
     })
     .then(() => window.location.href="/categories/" + searchBy + '/' + searchConstraint);
 }
+
+// Back to categories
+function categoryBack(){
+    window.location.href="/categories"
+}
+
+// Search Category
+function searchBatch(date){
+    if (date != 'date'){
+        searchBy = document.getElementById('searchBy').value
+        searchConstraint = document.getElementById('searchConstraint').value
+    }
+    else{
+        searchBy = 'date'
+        searchConstraint = document.getElementById('branchStartDateSearch').value
+    }
+    alert(searchConstraint)
+    fetch('/batches/' + searchBy + '/' + searchConstraint, {
+        method: 'GET'
+    })
+    .then(() => window.location.href="/batches/" + searchBy + '/' + searchConstraint);
+}
+
+// Back to batches
+function batchBack(){
+    window.location.href="/batches"
+}
+
+// Get date picked
+function getDate(){
+    console.log(document.getElementById('batchStartDate').value)
+}
+    

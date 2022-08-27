@@ -1,13 +1,41 @@
-from flask import Blueprint, render_template, request, jsonify
+from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
-from .models import Category
+from .models import Category, Batches, Courses
 
 views = Blueprint('views', __name__)
 
-@views.route('/batches', methods=['GET'])
+categories =[]
+
+@views.route('/batches', methods=['GET', 'POST'])
 def batches():
-    batches = []
-    return render_template('batches.html', batches=batches)
+    if request.method == 'POST':
+        batchId = "BA" + f"{(len(Batches.query.all())):03}"
+        batchName = request.form.get('batchName')
+        batchStrength = int(request.form.get('batchStrength'))
+        batchCourseId = request.form.get('batchCourseId')
+        batchStartDate = request.form.get('batchStartDate')
+        batchEndDate = request.form.get('batchEndDate')
+        new_batch = Batches(batchId=batchId,batchName=batchName,batchStrength=batchStrength,batchCourseId=batchCourseId,batchStartDate=batchStartDate,batchEndDate=batchEndDate)
+        db.session.add(new_batch)
+        db.session.commit()
+    batches = Batches.query.all()
+    courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+    return render_template('batches.html', batches=batches, listAll=True, courses=courses)
+
+@views.route('/batches/<searchBy>/<searchConstraint>')
+def searchBatch(searchBy, searchConstraint):
+    months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    if searchBy == 'id':
+        batches = Batches.query.filter(Batches.batchId.like("%"+searchConstraint+"%")).all()
+    elif searchBy == 'name':
+        batches = Batches.query.filter(Batches.batchName.like("%"+searchConstraint+"%")).all()
+    elif searchBy == 'date':
+        dateList = searchConstraint.split()
+        print(dateList)
+        searchConstraint = dateList[2] + "-" + f"{dateList[1][:-1]:02}" + "-" + f"{(months.index(dateList[0])+1):02}"
+        print(searchConstraint)
+        batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
+    return render_template('batches.html', batches=batches, listAll=False)
 
 @views.route('/categories', methods=['GET', 'POST'])
 def categories():
@@ -20,9 +48,8 @@ def categories():
         new_category = Category(categoryId=categoryId, categoryName=categoryName, categoryStatus=categoryStatus, categoryComments=categoryComments)
         db.session.add(new_category)
         db.session.commit()
-        
-    categories = Category.query.all()
-    return render_template('categories.html', categories=categories)
+    categories=Category.query.all()
+    return render_template('categories.html', categories=categories, listAll=True)
 
 @views.route('/categories/<categoryId>', methods=['DELETE'])
 def deleteCategory(categoryId):
@@ -38,7 +65,7 @@ def searchCategory(searchBy, searchConstraint):
         categories = Category.query.filter(Category.categoryId.like("%"+searchConstraint+"%")).all()
     elif searchBy == 'name':
         categories = Category.query.filter(Category.categoryName.like("%"+searchConstraint+"%")).all()
-    return render_template('categories.html', categories=categories)
+    return render_template('categories.html', categories=categories, listAll=False)
 
 @views.route('/qualifications')
 def qualifications():
