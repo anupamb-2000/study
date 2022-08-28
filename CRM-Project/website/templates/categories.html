@@ -115,7 +115,11 @@
         </div>
     </div>
     {% if categories|count != 0 %}
-    <span class="card-subtitle center"><em>Showing {{ categories|count }} results</em></span>
+    {% if categories|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ categories|count }} result</em></span>
+        {% else %}
+        <span class="card-subtitle center"><em>Showing {{ categories|count }} results</em></span>
+        {% endif %}
     {% endif %}
 </div>
 <!--card-->

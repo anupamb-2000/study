@@ -43,7 +43,15 @@ function categoryBack(){
     window.location.href="/categories"
 }
 
-// Search Category
+// Delete Batch
+function deleteBatch(batchId){
+    fetch('/batches/' + batchId, {
+        method: 'DELETE'
+    })
+    .then(() => window.location.href="/batches");
+}
+
+// Search Batch
 function searchBatch(date){
     if (date != 'date'){
         searchBy = document.getElementById('searchBy').value

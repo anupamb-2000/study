@@ -22,6 +22,14 @@ def batches():
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     return render_template('batches.html', batches=batches, listAll=True, courses=courses)
 
+@views.route('/batches/<batchId>', methods=['DELETE'])
+def deleteBatch(batchId):
+    batch = Batches.query.get(batchId)
+    if batch:
+        db.session.delete(batch)
+        db.session.commit()
+    return jsonify({})
+
 @views.route('/batches/<searchBy>/<searchConstraint>')
 def searchBatch(searchBy, searchConstraint):
     months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
@@ -32,7 +40,7 @@ def searchBatch(searchBy, searchConstraint):
     elif searchBy == 'date':
         dateList = searchConstraint.split()
         print(dateList)
-        searchConstraint = dateList[2] + "-" + f"{dateList[1][:-1]:02}" + "-" + f"{(months.index(dateList[0])+1):02}"
+        searchConstraint = dateList[2] + "-" + f"{(months.index(dateList[0])+1):02}" + "-" + f"{dateList[1][:-1]:02}"
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
     return render_template('batches.html', batches=batches, listAll=False)

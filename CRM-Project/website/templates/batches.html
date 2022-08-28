@@ -144,7 +144,11 @@
         </div>
     </div>
     {% if batches|count != 0 %}
-    <span class="card-subtitle center"><em>Showing {{ batches|count }} results</em></span>
+        {% if batches|count == 1 %}
+        <span class="card-subtitle center"><em>Showing {{ batches|count }} result</em></span>
+        {% else %}
+        <span class="card-subtitle center"><em>Showing {{ batches|count }} results</em></span>
+        {% endif %}
     {% endif %}
 </div>
 {% if batches|length == 0 %}
@@ -162,15 +166,12 @@
                 <h1>Hi</h1>
             </div>
         </div>
-        <a href="#modal5" class="modal-close btn-flat red-text waves-effect waves-red"
-            onclick="$('#modal5').modal('open');">Delete
+        {% if batch.users|count == 0 %}
+        <a class="btn-flat red-text waves-effect waves-red tooltipped" data-position="top"
+            data-tooltip="There are no enrollments for this batch. This can be deleted." onClick="deleteBatch('{{ batch.batchId }}')">Delete
             <i class="material-icons red-text right">delete</i>
         </a>
-        <div id="modal5" class="modal">
-            <div class="modal-content">
-                <h1>Hi</h1>
-            </div>
-        </div>
+        {% endif %}
     </div>
     <h1 class="card-title">
         {{ batch.batchName }}
@@ -178,7 +179,10 @@
     <span class="card-subtitle"><em>BatchId : {{ batch.batchId }}</em></span>
     <p class="card-subtitle"><em>BatchCourseId : {{ batch.batchCourseId }}</em></p>
     <p>
-        <strong>Batch Strength</strong> : {{ batch.batchStrength }}
+        <strong>Total Strength</strong> : {{ batch.batchStrength }}
+    </p>
+    <p>
+        <strong>Enrollments</strong> : {{ batch.enrollments|count }}
     </p>
     <p>
         <strong>Batch Start Date</strong> : {{ batch.batchStartDate }}
