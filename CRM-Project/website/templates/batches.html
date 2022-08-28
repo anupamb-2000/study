@@ -87,7 +87,7 @@
                         <label>Batch CourseId</label>
                     </div>
                     <div class="input-field col s6">
-                        <select name="BatchStatus" id="BatchStatus">
+                        <select name="BatchStatus" id="batchStatus">
                             <option value='1'>ENABLED</option>
                             <option value=''>DISABLED</option>
                         </select>
@@ -173,23 +173,41 @@
         </a>
         {% endif %}
     </div>
-    <h1 class="card-title">
-        {{ batch.batchName }}
-    </h1>
-    <span class="card-subtitle"><em>BatchId : {{ batch.batchId }}</em></span>
-    <p class="card-subtitle"><em>BatchCourseId : {{ batch.batchCourseId }}</em></p>
-    <p>
-        <strong>Total Strength</strong> : {{ batch.batchStrength }}
-    </p>
-    <p>
-        <strong>Enrollments</strong> : {{ batch.enrollments|count }}
-    </p>
-    <p>
-        <strong>Batch Start Date</strong> : {{ batch.batchStartDate }}
-    </p>
-    <p>
-        <strong>Batch End Date</strong> : {{ batch.batchEndDate }}
-    </p>
+    <div class="row">
+        <div class="col s10">
+            <h1 class="card-title">
+                {{ batch.batchName }}
+            </h1>
+            <span class="card-subtitle"><em>BatchId : {{ batch.batchId }}</em></span>
+            <p class="card-subtitle"><em>BatchCourseId : {{ batch.batchCourseId }}</em></p>
+            <p>
+                <strong>Total Strength</strong> : {{ batch.batchStrength }}
+            </p>
+            <p>
+                <strong>Enrollments</strong> : {{ batch.enrollments|count }}
+            </p>
+            <p>
+                <strong>Batch Start Date</strong> : {{ batch.batchStartDate }}
+            </p>
+            <p>
+                <strong>Batch End Date</strong> : {{ batch.batchEndDate }}
+            </p>
+        </div>
+        <div class="col s2 right">
+            <div class="switch">
+                <label>
+                  DISABLED
+                  {% if batch.batchStatus %}
+                  <input id="batchSwitch" name='batchClose' type="checkbox" onClick="toggleBatch()" value="ENABLED" checked disabled>
+                  {% else %}
+                  <input id="batchSwitch" name='batchClose' type="checkbox" onClick="toggleBatch()" value="ENABLED" disabled>
+                  {% endif %}
+                  <span class="lever"></span>
+                  ENABLED
+                </label>
+            </div>
+        </div>
+    </div>
 </div>
 {% endfor %}
 {% endif %}

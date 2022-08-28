@@ -43,6 +43,17 @@ function categoryBack(){
     window.location.href="/categories"
 }
 
+// Close/Open Batch
+function toggleBatch(){
+    toggleSwitch = document.getElementById('batchSwitch')
+    if (toggleSwitch.checked) {
+        alert(Boolean(toggleSwitch.value))
+    } 
+    else {
+        alert(Boolean(''))
+    }
+}
+
 // Delete Batch
 function deleteBatch(batchId){
     fetch('/batches/' + batchId, {

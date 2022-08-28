@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
 from .models import Category, Batches, Courses
+import json
 
 views = Blueprint('views', __name__)
 
@@ -13,9 +14,11 @@ def batches():
         batchName = request.form.get('batchName')
         batchStrength = int(request.form.get('batchStrength'))
         batchCourseId = request.form.get('batchCourseId')
+        batchStatus = bool(request.form.get('batchStatus'))
         batchStartDate = request.form.get('batchStartDate')
         batchEndDate = request.form.get('batchEndDate')
-        new_batch = Batches(batchId=batchId,batchName=batchName,batchStrength=batchStrength,batchCourseId=batchCourseId,batchStartDate=batchStartDate,batchEndDate=batchEndDate)
+        print(batchStatus)
+        new_batch = Batches(batchId=batchId,batchName=batchName,batchStrength=batchStrength,batchCourseId=batchCourseId,batchStatus=batchStatus,batchStartDate=batchStartDate,batchEndDate=batchEndDate)
         db.session.add(new_batch)
         db.session.commit()
     batches = Batches.query.all()
@@ -29,6 +32,13 @@ def deleteBatch(batchId):
         db.session.delete(batch)
         db.session.commit()
     return jsonify({})
+
+@views.route('/batches/<batchId>', methods=['PUT', 'PATCH'])
+def editBatch(batchId, editParam):
+    batch = Batches.query.get_or_404(batchId)
+    value = json.loads(request.data)
+
+
 
 @views.route('/batches/<searchBy>/<searchConstraint>')
 def searchBatch(searchBy, searchConstraint):

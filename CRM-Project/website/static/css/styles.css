@@ -225,6 +225,11 @@ body {
     background-color: var(--white) !important;
 }
 
+.switch {
+    margin-left: 25% !important;
+    width: fit-content;
+}
+
 /*footer*/
 .page-footer {
     color: black !important;
