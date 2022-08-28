@@ -92,7 +92,6 @@ function searchBatch(date){
         searchBy = 'date'
         searchConstraint = document.getElementById('branchStartDateSearch').value
     }
-    alert(searchConstraint)
     fetch('/batches/' + searchBy + '/' + searchConstraint, {
         method: 'GET'
     })
