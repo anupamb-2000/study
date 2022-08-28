@@ -34,10 +34,19 @@ def deleteBatch(batchId):
     return jsonify({})
 
 @views.route('/batches/<batchId>', methods=['PUT', 'PATCH'])
-def editBatch(batchId, editParam):
+def editBatch(batchId):
     batch = Batches.query.get_or_404(batchId)
     value = json.loads(request.data)
-
+    batch.batchId = value['batchId']
+    batch.batchName = value['batchName']
+    batch.batchStrength = value['batchStrength']
+    batch.batchCourseId = value['batchCourseId']
+    batch.batchStatus = value['batchStatus']
+    batch.batchStartDate = value['batchStartDate']
+    batch.batchEndDate = value['batchEndDate']
+    db.session.add(batch)
+    db.session.commit()
+    return jsonify({})
 
 
 @views.route('/batches/<searchBy>/<searchConstraint>')

@@ -157,13 +157,55 @@
 {% for batch in batches %}
 <div class="card">
     <div class="row right">
-        <a href="#modal4" class="modal-close btn-flat green-text waves-effect waves-green"
-            onclick="$('#modal4').modal('open');">Edit
+        <a href="#{{ batch.batchId }}" class="modal-trigger btn-flat green-text waves-effect waves-green"
+            >Edit
             <i class="material-icons green-text right">edit</i>
         </a>
-        <div id="modal4" class="modal">
+        <div id="{{ batch.batchId }}" class="modal">
             <div class="modal-content">
-                <h1>Hi</h1>
+                <form action="">
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <textarea name="batchName" id="editBatchName{{ batch.batchId }}" class="materialize-textarea" disabled>{{ batch.batchName }}</textarea>
+                            <label for="batchName">Batch name</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <textarea name="batchStrength" id="editBatchStrength{{ batch.batchId }}" class="materialize-textarea" placeholder="{{ batch.batchStrength }}"></textarea>
+                            <label for="batchStrength">Enter the batch strength</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <select name="batchCourseId" id="editBatchCourseId{{ batch.batchId }}" disabled>
+                                <option value="{{ batch.batchCourseId }}" selected>{{batch.batchCourseId }}</option>
+                            </select>
+                            <label>Batch CourseId</label>
+                        </div>
+                        <div class="input-field col s6">
+                            <select name="BatchStatus" id="editBatchStatus{{ batch.batchId }}" disabled>
+                                {% if batch.batchStatus %}
+                                <option value='1' >ENABLED</option>
+                                {% else %}
+                                <option value='' >DISABLED</option>
+                                {% endif %}
+                            </select>
+                            <label>Batch Status</label>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="input-field col s6">
+                            <input type="text" name="batchStartDate" id="editBatchStartDate{{ batch.batchId }}" class="datepicker materialize-textarea" placeholder="{{ batch.batchStartDate }}" disabled>
+                        </div>
+                        <div class="input-field col s6">
+                            <input type="text" name="batchEndDate" id="editBatchEndDate{{ batch.batchId }}" class="datepicker materialize-textarea" placeholder="{{ batch.batchEndDate }}" disabled>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button class="modal-close btn-flat waves-effect waves-orange" onClick="editBatch('{{ batch.batchId }}')">Submit
+                            <i class="material-icons right">send</i>
+                        </button>
+                    </div>
+                </form>
             </div>
         </div>
         {% if batch.users|count == 0 %}
