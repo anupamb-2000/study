@@ -14,6 +14,14 @@
     box-sizing: border-box;
 }
 
+.grey {
+    background-color: var(--grey) !important;
+}
+
+.white {
+    background-color: var(--white) !important;
+}
+
 .orange {
     background-color: var(--orange) !important;
     color: var(--white) !important;
@@ -29,6 +37,10 @@ body {
     /* background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png"); */
 }
 /*top container*/
+.nav-wrapper {
+    box-shadow: none !important;
+}
+
 .section {
     padding-top: 4rem;
 }
