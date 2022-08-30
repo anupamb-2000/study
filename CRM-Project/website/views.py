@@ -23,7 +23,7 @@ def batches():
         db.session.commit()
     batches = Batches.query.all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
-    return render_template('batches.html', batches=batches, listAll=True, courses=courses)
+    return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses)
 
 @views.route('/batches/<batchId>', methods=['DELETE'])
 def deleteBatch(batchId):
