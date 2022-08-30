@@ -43,6 +43,19 @@ function categoryBack(){
     window.location.href="/categories"
 }
 
+// Filter Batch
+function applyFilters(){
+    inputs = document.querySelectorAll('.filterCheckbox:checked')
+    let categories = {'categories': []}
+    inputs.forEach(ip => {
+        categories['categories'].push(ip.value)
+    });
+    fetch('/batches',{
+        method: 'GET'
+    })
+    .then(() => window.location.href = "/batches?categories=" + categories['categories'])
+}
+
 // Close/Open Batch
 function toggleBatch(){
     toggleSwitch = document.getElementById('batchSwitch')

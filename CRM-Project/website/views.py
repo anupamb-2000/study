@@ -7,6 +7,10 @@ views = Blueprint('views', __name__)
 
 categories =[]
 
+@views.route('/dashboard')
+def dashboard():
+    return render_template('dashboard.html')
+
 @views.route('/batches', methods=['GET', 'POST'])
 def batches():
     if request.method == 'POST':
@@ -22,8 +26,12 @@ def batches():
         db.session.add(new_batch)
         db.session.commit()
     batches = Batches.query.all()
+    if request.args :
+        batches = Batches.query.filter(Batches.batchCourseId.in_(Courses.query.filter(Courses.courseCategoryId.in_((request.args.get('categories')).split(','))))).all()
+        print(request.args.get('categories').split(','))
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
-    return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses)
+    categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
+    return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
 
 @views.route('/batches/<batchId>', methods=['DELETE'])
 def deleteBatch(batchId):
@@ -62,7 +70,9 @@ def searchBatch(searchBy, searchConstraint):
         searchConstraint = dateList[2] + "-" + f"{(months.index(dateList[0])+1):02}" + "-" + f"{dateList[1][:-1]:02}"
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
-    return render_template('batches.html', batches=batches, listAll=False)
+    courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
+    categories = Category.query.with_enitities(Category.categoryId, Category.categoryName).distinct().all()
+    return render_template('batches.html', batches=batches[::-1], listAll=False, courses=courses, categories=categories)
 
 @views.route('/categories', methods=['GET', 'POST'])
 def categories():
