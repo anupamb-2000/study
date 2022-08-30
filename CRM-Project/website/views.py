@@ -27,8 +27,8 @@ def batches():
         db.session.commit()
     batches = Batches.query.all()
     if request.args :
-        batches = Batches.query.filter(Batches.batchCourseId.in_(Courses.query.filter(Courses.courseCategoryId.in_((request.args.get('categories')).split(','))))).all()
         print(request.args.get('categories').split(','))
+        # batches = Batches.query.filter(Batches.batchCourseId.in_(Courses.query.filter(Courses.courseCategoryId.in_((request.args.get('categories')).split(','))))).all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
     return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
