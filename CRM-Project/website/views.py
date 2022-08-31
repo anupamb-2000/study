@@ -1,7 +1,9 @@
 from flask import Blueprint, render_template, request, jsonify, url_for, redirect
 from . import db
-from .models import Category, Batches, Courses
+from .models import Category, Batches, Courses, Users, ActivityLog
 import json
+from sqlalchemy import func, Date
+from datetime import date
 
 views = Blueprint('views', __name__)
 
@@ -9,7 +11,33 @@ categories =[]
 
 @views.route('/dashboard')
 def dashboard():
-    return render_template('dashboard.html')
+    users = Users.query.all()
+    dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).all()
+    # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
+    return render_template('dashboard.html', users=users, dates=dates)
+
+@views.route('/users')
+def  users():
+    users = Users.query.all()
+    if request.args :
+        print(request.args.get('roles').split(','))
+        listAll = False
+        users = Users.query.filter(Users.userRoleId.in_(request.args.get('roles').split(','))).all()
+        if len(request.args.get('roles').split(',')) == 2:
+            listAll = True
+        elif request.args.get('roles').split(',') == ['']:
+            listAll = True
+            users = Users.query.all()
+        return render_template('users.html', users=users, listAll=listAll)
+    return render_template('users.html', users=users, listAll=True)
+
+@views.route('/users/<searchBy>/<searchConstraint>')
+def searchUser(searchBy, searchConstraint):
+    if searchBy == 'id':
+        users = Users.query.filter(Users.userId.like("%"+searchConstraint+"%")).all()
+    elif searchBy == 'name':
+        users = Users.query.filter(Users.userName.like("%"+searchConstraint+"%")).all()
+    return render_template('users.html', users=users, listAll=False)
 
 @views.route('/batches', methods=['GET', 'POST'])
 def batches():
@@ -26,11 +54,18 @@ def batches():
         db.session.add(new_batch)
         db.session.commit()
     batches = Batches.query.all()
-    if request.args :
-        print(request.args.get('categories').split(','))
-        # batches = Batches.query.filter(Batches.batchCourseId.in_(Courses.query.filter(Courses.courseCategoryId.in_((request.args.get('categories')).split(','))))).all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
+    if request.args.get('status') :
+        print(request.args.get('status').split(','))
+        listAll = False
+        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('status')).split(','))).all()
+        if len(request.args.get('status').split(',')) == 2:
+            listAll = True
+        elif request.args.get('status').split(',') == ['']:
+            listAll = True
+            batches = Batches.query.all()
+        return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories)
     return render_template('batches.html', batches=batches[::-1], listAll=True, courses=courses, categories=categories)
 
 @views.route('/batches/<batchId>', methods=['DELETE'])
@@ -71,7 +106,7 @@ def searchBatch(searchBy, searchConstraint):
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
-    categories = Category.query.with_enitities(Category.categoryId, Category.categoryName).distinct().all()
+    categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
     return render_template('batches.html', batches=batches[::-1], listAll=False, courses=courses, categories=categories)
 
 @views.route('/categories', methods=['GET', 'POST'])

@@ -118,16 +118,20 @@
     <div id="modal3" class="modal">
         <div class="modal-content">
             <form action="#">
-                <h6 class="card-title">Filter by categories</h6>
+                <h6 class="card-title">Filter by status</h6>
                 <div class="content-container row">
-                    {% for category in categories %}
-                    <p class="col s4">
+                    <p class="col s6">
                         <label>
-                            <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="{{ category.categoryId }}"/>
-                            <span>{{category.categoryName}}</span>
+                            <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="1"/>
+                            <span>ENABLED</span>
                         </label>
                     </p>
-                    {% endfor %}
+                    <p class="col s6">
+                        <label>
+                            <input name="checkbox" type="checkbox" class="filterCheckbox checkbox-orange" value="0"/>
+                            <span>DISABLED</span>
+                        </label>
+                    </p>
                 </div>
             </form>
         </div>
