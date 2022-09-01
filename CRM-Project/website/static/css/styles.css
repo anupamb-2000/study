@@ -36,6 +36,7 @@ body {
     background-color: var(--white);
     /* background-image: url("https://www.transparenttextures.com/patterns/concrete-wall.png"); */
 }
+
 /*top container*/
 .nav-wrapper {
     box-shadow: none !important;

@@ -1,4 +1,5 @@
 from . import db
+from flask_login import UserMixin
 
 class UserBatch(db.Model):
     id = db.Column(db.Integer, primary_key=True) # primary key
@@ -110,7 +111,7 @@ class ActivityLog(db.Model):
     #     self.userId = userId
     #     self.time = time
 
-class Users(db.Model):
+class Users(db.Model, UserMixin):
     userId = db.Column(db.Integer, primary_key=True, autoincrement=True) #primary key
     userName = db.Column(db.String(80), nullable=False)
     userPassword = db.Column(db.String(250), nullable=False)
@@ -127,6 +128,8 @@ class Users(db.Model):
     qualifications = db.relationship('UserQualification')
     batches = db.relationship('UserBatch')
 
+    def get_id(self):
+           return (self.userId)
     # def __init__(self, userName, userPassword, userRole, userEmail, userPhone, userCountry, userState, userCity):
     #     self.userName = userName
     #     self.userPassword = userPassword

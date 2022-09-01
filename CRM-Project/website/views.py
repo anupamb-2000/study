@@ -4,12 +4,24 @@ from .models import Category, Batches, Courses, Users, ActivityLog
 import json
 from sqlalchemy import func, Date
 from datetime import date
+from flask_login import login_user, login_required, logout_user, current_user
+from functools import wraps
+
+def admin_required(func):
+    @wraps(func)
+    def isadmin(*args,**kwargs):
+        if(current_user.userRoleId != 2):
+            return render_template('warning.html')
+        return func(*args,**kwargs)
+    return isadmin
 
 views = Blueprint('views', __name__)
 
 categories =[]
 
 @views.route('/dashboard')
+@login_required
+@admin_required
 def dashboard():
     users = Users.query.all()
     dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).all()
@@ -17,6 +29,7 @@ def dashboard():
     return render_template('dashboard.html', users=users, dates=dates)
 
 @views.route('/users')
+@admin_required
 def  users():
     users = Users.query.all()
     if request.args :
