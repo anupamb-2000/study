@@ -1,0 +1,98 @@
+<!--{% extends "base.html" %} -->
+{% block title %}Login{% endblock %} 
+{% block content %}
+    <div class="flex-wrapper">
+    <section class="container section" id="userAuth">
+        <div class="row">
+            <div class="col s12 l6">
+                <div class="logo-container">
+                    <img src="../static/images/logo-dark.png" alt="logo">
+                </div>
+                <p>With more lessons, you can begin, improve, or strengthen your skills.</p>
+            </div>
+            <div class="col s12 l6 offest-l2">
+                <div class="col s12" id="registerUser">
+                    <form class="col s12" method="post">
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">person_outline</i>
+                                <input id="firstName" name="firstName" type="text" class="validate">
+                                <label for="firstName">First Name</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">person</i>
+                                <input id="email" name="email" type="email" class="validate">
+                                <label for="email">Email</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">fingerprint</i>
+                                <input id="password1" name="password1" type="password" class="validate">
+                                <label for="password1">Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">fingerprint</i>
+                                <input id="password2" name="password2" type="password" class="validate">
+                                <label for="password2">Confirm Password</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">phone</i>
+                                <input id="phone" name="phone" type="tel" class="validate">
+                                <label for="phone">Phone</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">flag</i>
+                                <input id="country" name="country" type="text" class="validate">
+                                <label for="country">Country</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix">map</i>
+                                <input id="state" name="state" type="text" class="validate">
+                                <label for="state">State</label>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="input-field col s12">
+                                <i class="material-icons prefix"><span class="material-symbols-outlined">
+                                    location_city
+                                    </span></i>
+                                <input id="city" name="city" type="text" class="validate">
+                                <label for="city">City</label>
+                            </div>
+                        </div>
+                        <button class="waves-effect waves-light btn orange" type="submit"><i
+                                class="material-icons right">send</i>Submit</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </section> 
+    <!--footer-->
+    <footer class="page-footer">
+    <div class="footer-copyright">
+        <div class="right-align container align-footer">
+            ©2022 All Rights Reserved, <span style="color:#52ab98">InApp Academy</span>. Privacy & Terms
+
+        </div>
+      </div>
+    </footer>
+</div>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+<script type="text/javascript" src="../../js/materialize.js"></script>
+<script>
+    $(document).ready(function () {
+        $('.tabs').tabs();
+    })
+</script>
+<!-- {% endblock %} -->

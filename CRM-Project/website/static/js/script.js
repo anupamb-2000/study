@@ -85,7 +85,7 @@ function applyFilters() {
     fetch('/batches', {
         method: 'GET'
     })
-        .then(() => window.location.href = "/batches?status=" + status['status'])
+    .then(() => window.location.href = "/batches?status=" + status['status'])
 }
 
 // Close/Open Batch
