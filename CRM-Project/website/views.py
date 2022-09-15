@@ -69,13 +69,14 @@ def batches():
     batches = Batches.query.all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
     categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
-    if request.args :
-        print(request.args.get('categories').split(','))
+
+    if request.args.get('status') :
+        print(request.args.get('status').split(','))
         listAll = False
-        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('categories')).split(','))).all()
-        if len(request.args.get('categories').split(',')) == 2:
+        batches = Batches.query.filter(Batches.batchStatus.in_((request.args.get('status')).split(','))).all()
+        if len(request.args.get('status').split(',')) == 2:
             listAll = True
-        elif request.args.get('categories').split(',') == ['']:
+        elif request.args.get('status').split(',') == ['']:
             listAll = True
             batches = Batches.query.all()
         return render_template('batches.html', batches=batches[::-1], listAll=listAll, courses=courses, categories=categories)
@@ -119,7 +120,7 @@ def searchBatch(searchBy, searchConstraint):
         print(searchConstraint)
         batches = Batches.query.filter(Batches.batchStartDate.like("%"+searchConstraint+"%")).all()
     courses = Courses.query.with_entities(Courses.courseId, Courses.courseName).distinct().all()
-    categories = Category.query.with_enitities(Category.categoryId, Category.categoryName).distinct().all()
+    categories = Category.query.with_entities(Category.categoryId, Category.categoryName).distinct().all()
     return render_template('batches.html', batches=batches[::-1], listAll=False, courses=courses, categories=categories)
 
 @views.route('/categories', methods=['GET', 'POST'])

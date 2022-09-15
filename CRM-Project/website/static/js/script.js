@@ -78,14 +78,14 @@ function categoryBack() {
 // Filter Batch
 function applyFilters() {
     inputs = document.querySelectorAll('.filterCheckbox:checked')
-    let categories = { 'categories': [] }
+    let status = { 'status': [] }
     inputs.forEach(ip => {
-        categories['categories'].push(ip.value)
+        status['status'].push(ip.value)
     });
     fetch('/batches', {
         method: 'GET'
     })
-        .then(() => window.location.href = "/batches?categories=" + categories['categories'])
+    .then(() => window.location.href = "/batches?status=" + status['status'])
 }
 
 // Close/Open Batch
@@ -225,4 +225,4 @@ var values = json.map(function (e) {
 });
 console.log(values);
 
-var chart = BuildChart(labels, values, "Login Count of users");
+var chart = BuildChart(labels, values, "Login Count of users"); 
