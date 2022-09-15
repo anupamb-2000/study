@@ -1,1 +1,3 @@
 notesvenv/
+**/node_modules
+**/.vs
