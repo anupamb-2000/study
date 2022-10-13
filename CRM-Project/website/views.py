@@ -26,9 +26,10 @@ def dashboard():
     users = Users.query.all()
     dates = ActivityLog.query.with_entities(func.cast(ActivityLog.time, Date).label('Date'), func.count(ActivityLog.userId).label('logincount')).group_by(func.cast(ActivityLog.time, Date)).all()
     # dates = ActivityLog.query(cast(ActivityLog.time, Date)).distinct().all()
-    return render_template('dashboard.html', users=users, dates=dates)
+    return render_template('dashboard.html', users=users, dates=dates, user=current_user)
 
 @views.route('/users')
+@login_required
 @admin_required
 def  users():
     users = Users.query.all()
@@ -41,8 +42,8 @@ def  users():
         elif request.args.get('roles').split(',') == ['']:
             listAll = True
             users = Users.query.all()
-        return render_template('users.html', users=users, listAll=listAll)
-    return render_template('users.html', users=users, listAll=True)
+        return render_template('users.html', users=users, listAll=listAll, user=current_user)
+    return render_template('users.html', users=users, listAll=True, user=current_user)
 
 @views.route('/users/<searchBy>/<searchConstraint>')
 def searchUser(searchBy, searchConstraint):
