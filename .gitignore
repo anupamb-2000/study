@@ -1,3 +1,4 @@
 notesvenv/
 **/node_modules
 **/.vs
+MERN/Workout Buddy/backend/.env
