@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import { Button, TextField, FormControl, Alert, Box } from '@mui/material'
 
 const WorkoutForm = () => {
   const { dispatch } = useWorkoutsContext()
@@ -40,36 +41,45 @@ const WorkoutForm = () => {
   }
 
   return (
-    <form className="create" onSubmit={handleSubmit}> 
+    <Box component="form" autoComplete="off" className="create" onSubmit={handleSubmit}> 
       <h3>Add a New Workout</h3>
 
-      <label>Excersize Title:</label>
-      <input 
-        type="text" 
-        onChange={(e) => setTitle(e.target.value)} 
-        value={title}
-        className={emptyFields.includes('title') ? 'error' : ''}
-      />
+      <FormControl fullWidth sx={{ m: 1 }}>
+        <TextField 
+          type="text" 
+          onChange={(e) => setTitle(e.target.value)} 
+          value={title}
+          label="Excersize Title:"
+          variant="outlined"
+          error={emptyFields.includes('title') ? 'true' : ''}
+        />
+      </FormControl>
 
-      <label>Load (in kg):</label>
-      <input 
-        type="number" 
-        onChange={(e) => setLoad(e.target.value)} 
-        value={load}
-        className={emptyFields.includes('load') ? 'error' : ''}
-      />
+      <FormControl fullWidth sx={{ m: 1 }}>
+        <TextField 
+          type="number" 
+          onChange={(e) => setLoad(e.target.value)} 
+          value={load}
+          label="Load (in kg):"
+          variant="outlined"
+          error={emptyFields.includes('load') ? 'true' : ''}
+        />
+      </FormControl>
 
-      <label>Number of Reps:</label>
-      <input 
-        type="number" 
-        onChange={(e) => setReps(e.target.value)} 
-        value={reps} 
-        className={emptyFields.includes('reps') ? 'error' : ''}
-      />
+      <FormControl fullWidth sx={{ m: 1 }}>
+        <TextField 
+          type="number" 
+          onChange={(e) => setReps(e.target.value)} 
+          value={reps} 
+          label="Number of Reps:"
+          variant="outlined"
+          error={emptyFields.includes('reps') ? 'true' : ''}
+        />
+      </FormControl>
 
-      <button>Add Workout</button>
-      {error && <div className="error">{error}</div>}
-    </form>
+      <Button fullWidth sx={{ m: 1 }} variant="outlined" type="submit">Add Workout</Button>
+      {error && <Alert severity="error">{error}</Alert>}
+    </Box>
   )
 }
 

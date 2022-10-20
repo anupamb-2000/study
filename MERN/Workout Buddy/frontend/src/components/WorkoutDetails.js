@@ -1,4 +1,6 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
+import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
+
 
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
@@ -23,7 +25,7 @@ const WorkoutDetails = ({ workout }) => {
       <p><strong>Load (kg): </strong>{workout.load}</p>
       <p><strong>Number of reps: </strong>{workout.reps}</p>
       <p>{formatDistanceToNow(new Date(workout.createdAt), { addSuffix: true })}</p>
-      <span className="material-symbols-outlined" onClick={handleClick}>delete</span>
+      <span className="material-symbols-outlined" onClick={handleClick}><DeleteOutlineIcon /></span>
     </div>
   )
 }
