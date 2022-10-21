@@ -45,7 +45,8 @@ const WorkoutForm = () => {
       <h3>Add a New Workout</h3>
 
       <FormControl fullWidth sx={{ m: 1 }}>
-        <TextField 
+        <TextField  
+          color="text"
           type="text" 
           onChange={(e) => setTitle(e.target.value)} 
           value={title}
@@ -77,7 +78,7 @@ const WorkoutForm = () => {
         />
       </FormControl>
 
-      <Button fullWidth sx={{ m: 1 }} variant="outlined" type="submit">Add Workout</Button>
+      <Button fullWidth sx={{ m: 1 }} variant="contained" type="submit">Add Workout</Button>
       {error && <Alert severity="error">{error}</Alert>}
     </Box>
   )

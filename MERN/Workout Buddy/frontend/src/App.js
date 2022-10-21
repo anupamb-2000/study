@@ -4,14 +4,23 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Home from './pages/Home'
 import Navbar from './components/Navbar'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
+import { Container } from '@mui/material'
 
 const theme = createTheme({
   palette: {
     primary: {
-      main: "#1aac83"
+      main: "#1aac83",
+      contrastText: "#fff" //button text white instead of black
+    },
+    secondary: {
+      main: "#fff"
     },
     error: {
       main: "#e7195a"
+    },
+    text: {
+      primary: "#333",
+      secondary: "#666",
     }
   },
   typography: {
@@ -23,19 +32,17 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
-      <div className="App">
       <BrowserRouter>
         <Navbar />
-        <div className="pages">
+        <Container>
           <Routes>
             <Route 
               path="/" 
               element={<Home />} 
             />
           </Routes>
-        </div>
+        </Container>
       </BrowserRouter>
-    </div>
     </ThemeProvider>
   );
 }
