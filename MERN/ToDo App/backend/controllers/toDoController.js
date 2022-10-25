@@ -12,8 +12,13 @@ const getToDos = async (req, res) => {
 const createToDo = async (req, res) => {
     const toDoText = req.body
 
+    let emptyFields = []
+
     if(!toDoText) {
-        return res.status(400).json({ error: 'Please fill in all the fields' })
+        emptyFields.push('toDoText')
+    }
+    if(emptyFields.length > 0) {
+        return res.status(400).json({ error: 'Please fill in all the fields', emptyFields })
     }
 
     // add doc to db
@@ -35,7 +40,7 @@ const deleteToDo = async (req, res) => {
     const toDo = await ToDo.findOneAndDelete({_id: id})
 
     if (!toDo) {
-        return res.status(400).json({ error: 'No such workout' })
+        return res.status(400).json({ error: 'No such ToDo' })
     }
 
     res.status(200).json(toDo)

@@ -1,11 +1,11 @@
 import { useWorkoutsContext } from '../hooks/useWorkoutsContext'
 import DeleteOutlineIcon from '@mui/icons-material/DeleteOutline'
 import { Card, CardContent, IconButton, Typography } from '@mui/material'
+import { Box } from '@mui/system'
 
 
 // date fns
 import formatDistanceToNow from 'date-fns/formatDistanceToNow'
-import { Box } from '@mui/system'
 
 const WorkoutDetails = ({ workout }) => {
   const { dispatch } = useWorkoutsContext()
