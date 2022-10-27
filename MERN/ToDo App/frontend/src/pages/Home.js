@@ -1,6 +1,6 @@
 import { useEffect } from 'react'
 import { useToDoContext } from '../hooks/useToDoContext'
-import  { Box } from '@mui/material' 
+import  { Box, Grid } from '@mui/material' 
 
 // components
 import ToDoDetails from '../components/ToDoDetails'
@@ -23,14 +23,18 @@ const Home = () => {
     }, [dispatch])
 
     return(
-        <div className="home">
-            <ToDoForm />
-            <Box>
-                {toDos && toDos.map(todo => (
-                    <ToDoDetails toDo={todo} key={todo._id} />
-                ))}
-            </Box>
-        </div>
+        <Grid container spacing={4}>
+            <Grid item xs={8}>
+                <Box>
+                    {toDos && toDos.map(todo => (
+                        <ToDoDetails toDo={todo} key={todo._id} />
+                    ))}
+                </Box>
+            </Grid>
+            <Grid item xs={4}>
+                <ToDoForm />
+            </Grid>
+        </Grid>
     )
 }
 
