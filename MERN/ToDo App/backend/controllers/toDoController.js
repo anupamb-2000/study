@@ -10,7 +10,7 @@ const getToDos = async (req, res) => {
 
 // create a new ToDo
 const createToDo = async (req, res) => {
-    const toDoText = req.body
+    const { toDoText } = req.body
 
     let emptyFields = []
 
@@ -23,8 +23,9 @@ const createToDo = async (req, res) => {
 
     // add doc to db
     try {
-        const toDo = await ToDo.create(toDoText)
+        const toDo = await ToDo.create({ toDoText })
         res.status(200).json(toDo)
+        console.log(toDoText)
     }catch(error) {
         res.status(400).json({error: error.message})
     }
