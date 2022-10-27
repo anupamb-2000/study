@@ -10,7 +10,8 @@ const theme = createTheme({
   palette: {
     primary: {
       main: "#1aac83",
-      contrastText: "#fff" //button text white instead of black
+      contrastText: "#fff", //button text white instead of black
+      mode: "dark"
     },
     secondary: {
       main: "#fff"
