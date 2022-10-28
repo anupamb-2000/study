@@ -1,6 +1,11 @@
-import { AppBar, Toolbar, Typography } from "@mui/material"
+import { AppBar, Switch, Toolbar, Typography } from "@mui/material"
 
-const Navbar = () => {
+const Navbar = ({ theme }) => {
+
+    const handleThemeChange =() => {
+        console.log(theme.palette.mode) 
+    }
+
 
     return (
         <AppBar position="sticky" color="secondary">

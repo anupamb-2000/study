@@ -1,5 +1,5 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
-import { createTheme, ThemeProvider } from '@mui/material'
+import { createTheme, CssBaseline, ThemeProvider } from '@mui/material'
 import { Container } from '@mui/system'
 
 // pages and components
@@ -8,20 +8,16 @@ import Navbar from './components/Navbar'
 
 const theme = createTheme({
   palette: {
+    mode: 'dark',
     primary: {
       main: "#1aac83",
-      contrastText: "#fff", //button text white instead of black
-      mode: "dark"
+      contrastText: "#fff" //button text white instead of black
     },
     secondary: {
       main: "#fff"
     },
     error: {
       main: "#e7195a"
-    },
-    text: {
-      primary: "#333",
-      secondary: "#666",
     }
   },
   typography: {
@@ -32,8 +28,9 @@ const theme = createTheme({
 function App() {
   return (
     <ThemeProvider theme={theme}>
+      <CssBaseline />
       <BrowserRouter>
-        <Navbar />
+        <Navbar theme={theme} />
         <Container>
           <Routes>
             <Route 
