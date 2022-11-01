@@ -45,15 +45,23 @@ namespace SQLLiteDemo.MVVM.ViewModels
                 .RuleFor(x => x.Address, f => f.Person.Address.Street)
                 .Generate();
 
-            CurrentCustomer.Passport = new Passport
+            CurrentCustomer.Passport = new List<Passport>
             {
-                ExpirationDate = DateTime.Now.AddDays(30)
+                new Passport
+                {
+                    ExpirationDate = DateTime.Now.AddDays(30)
+                },
+                new Passport
+                {
+                    ExpirationDate = DateTime.Now.AddDays(15)
+                }
             };
         }
 
         private void Refresh()
         {
-            Customers = App.CustomerRepo.GetItems();
+            //Customers = App.CustomerRepo.GetItems();
+            Customers = App.CustomerRepo.GetItemsWithChildren();
             //Customers = App.CustomerRepo.GetAll(x => x.Name.StartsWith("A"));
             var passports = App.PassportsRepo.GetItems();
         }

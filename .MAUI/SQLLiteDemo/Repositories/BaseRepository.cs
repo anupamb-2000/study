@@ -27,7 +27,9 @@ namespace SQLLiteDemo.Repositories
         {
             try
             {
-                connection.Delete(item);
+                //connection.Delete(item);
+                connection.Delete(item, true);
+
             }
             catch (Exception ex)
             {
@@ -119,6 +121,19 @@ namespace SQLLiteDemo.Repositories
         public void SaveItemWithChildren(T item, bool recursive = false)
         {
             connection.InsertWithChildren(item, recursive);
+        }
+
+        public List<T> GetItemsWithChildren()
+        {
+            try
+            {
+                return connection.GetAllWithChildren<T>().ToList();
+            }
+            catch (Exception ex)
+            {
+                StatusMessage = $"Error: {ex.Message}";
+            }
+            return null;
         }
     }
 }

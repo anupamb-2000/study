@@ -1,5 +1,4 @@
 ﻿using SQLiteNetExtensions.Attributes;
-using SQLLiteDemo.Abstractions;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -8,13 +7,12 @@ using System.Threading.Tasks;
 
 namespace SQLLiteDemo.MVVM.Models
 {
-    public  class Passport : TableData
+    public class CustomerPassport
     {
-        public DateTime ExpirationDate { get; set; }
-
-        //[ForeignKey(typeof(Customer))]
-        [ManyToMany(typeof(Customer))]
+        [ForeignKey(typeof(Customer))]
         public int CustomerId { get; set; }
 
+        [ForeignKey(typeof(Passport))]
+        public int PassportId { get; set; }
     }
 }
