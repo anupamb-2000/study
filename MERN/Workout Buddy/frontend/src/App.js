@@ -2,6 +2,8 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 
 // pages & components
 import Home from './pages/Home'
+import Login from './pages/Login'
+import Signup from './pages/Signup'
 import Navbar from './components/Navbar'
 import { createTheme, ThemeProvider } from '@mui/material/styles'
 import { Container } from '@mui/material'
@@ -39,6 +41,14 @@ function App() {
             <Route 
               path="/" 
               element={<Home />} 
+            />
+            <Route 
+              path="/login" 
+              element={<Login />} 
+            />
+            <Route 
+              path="/signup"  
+              element={<Signup />} 
             />
           </Routes>
         </Container>
