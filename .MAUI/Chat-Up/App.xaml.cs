@@ -1,4 +1,6 @@
-﻿namespace Chat_Up;
+﻿using Chat_Up.Views;
+
+namespace Chat_Up;
 
 public partial class App : Application
 {
@@ -6,6 +8,6 @@ public partial class App : Application
 	{
 		InitializeComponent();
 
-		MainPage = new AppShell();
+		MainPage = new HomeView();
 	}
 }
