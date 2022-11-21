@@ -58,7 +58,7 @@
           Margin="12, 24">
             <Grid.GestureRecognizers>
                 <TapGestureRecognizer                
-                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=DetailCommand}"      
+                    Command="{Binding Source={RelativeSource AncestorType={x:Type viewmodel:HomeViewModel}}, Path=DetailsCommand}"      
                     CommandParameter="{Binding}"/>
             </Grid.GestureRecognizers>
             <Grid

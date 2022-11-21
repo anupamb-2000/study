@@ -36,7 +36,7 @@ namespace Chat_Up.ViewModels
             }
         }
 
-        public ICommand DetailCommand => new Command<object>(OnNavigate);
+        public ICommand DetailsCommand => new Command<object>(OnNavigate);
 
         void LoadData()
         {
